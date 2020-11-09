@@ -12,7 +12,7 @@ max_line_length = 100
 [*.tsx]
 quote_type = single
 
-[*.tsx]
+[*.ts]
 quote_type = single
 
 [*.md]
