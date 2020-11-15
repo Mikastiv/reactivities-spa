@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Dimmer, Loader } from 'semantic-ui-react';
 
 interface IProps {
@@ -6,10 +7,12 @@ interface IProps {
   content?: string;
 }
 
-export const Loading: React.FC<IProps> = ({ inverted = true, content }) => {
+const Loading: React.FC<IProps> = ({ inverted = true, content }) => {
   return (
     <Dimmer active inverted={inverted}>
       <Loader content={content} />
     </Dimmer>
   );
 };
+
+export default Loading;

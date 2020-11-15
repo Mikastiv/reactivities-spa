@@ -1,8 +1,10 @@
-import { observer } from 'mobx-react-lite';
 import React, { Fragment, useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+
 import { Item, Label } from 'semantic-ui-react';
+
 import ActivityStore from '../../../app/stores/activityStore';
-import { ActivityListItem } from './ActivityListItem';
+import ActivityListItem from './ActivityListItem';
 
 interface IProps {}
 

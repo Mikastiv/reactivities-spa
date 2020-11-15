@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+
 import { Grid } from 'semantic-ui-react';
+
 import ActivityList from './ActivityList';
 import ActivityStore from '../../../app/stores/activityStore';
-import { Loading } from '../../../app/layout/Loading';
+import Loading from '../../../app/layout/Loading';
 
 interface IProps {}
 
