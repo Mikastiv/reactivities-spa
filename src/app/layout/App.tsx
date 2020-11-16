@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-
 import { Container } from 'semantic-ui-react';
 
 import NavBar from '../../features/nav/NavBar';

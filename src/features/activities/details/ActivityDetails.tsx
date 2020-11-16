@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom';
-
 import { Grid } from 'semantic-ui-react';
 
 import Loading from '../../../app/layout/Loading';

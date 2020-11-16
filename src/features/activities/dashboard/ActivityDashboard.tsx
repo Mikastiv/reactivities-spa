@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-
 import { Grid } from 'semantic-ui-react';
 
 import ActivityList from './ActivityList';

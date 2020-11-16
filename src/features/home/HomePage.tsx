@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Button, Container, Header, Segment, Image } from 'semantic-ui-react';
 
 const HomePage = () => {
