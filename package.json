@@ -17,6 +17,7 @@
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "final-form": "^4.20.1",
+    "http-status-codes": "^2.1.4",
     "mobx": "^6.0.3",
     "mobx-react-lite": "^3.1.5",
     "react": "^17.0.1",

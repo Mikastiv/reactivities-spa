@@ -2,20 +2,21 @@ import React, { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Grid } from 'semantic-ui-react';
 
+import { RootStoreContext } from '../../../app/stores/rootStore';
 import ActivityList from './ActivityList';
-import ActivityStore from '../../../app/stores/activityStore';
 import Loading from '../../../app/layout/Loading';
 
 interface IProps {}
 
 const ActivityDashboard: React.FC<IProps> = () => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
+  const { loadActivities, loadingInitial } = rootStore.activityStore;
 
   useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
+    loadActivities();
+  }, [loadActivities]);
 
-  if (activityStore.loadingInitial) return <Loading content="Loading activities..." />;
+  if (loadingInitial) return <Loading content="Loading activities..." />;
 
   return (
     <Grid>

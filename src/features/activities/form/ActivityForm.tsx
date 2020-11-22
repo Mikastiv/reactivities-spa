@@ -6,14 +6,14 @@ import { Button, Form, Grid, Segment } from 'semantic-ui-react';
 import { Form as FinalForm, Field } from 'react-final-form';
 import { combineValidators, composeValidators, hasLengthGreaterThan, isRequired } from 'revalidate';
 
+import { RootStoreContext } from '../../../app/stores/rootStore';
 import { ActivityFormValues } from '../../../app/models/activity';
 import { category } from '../../../app/common/options/categoryOptions';
-import ActivityStore from '../../../app/stores/activityStore';
+import { combineDateAndTime } from '../../../app/common/utils/utils';
 import TextInput from '../../../app/common/form/TextInput';
 import TextAreaInput from '../../../app/common/form/TextAreaInput';
 import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
-import { combineDateAndTime } from '../../../app/common/utils/utils';
 
 const validate = combineValidators({
   title: isRequired({ message: 'The event title is required' }),
@@ -33,8 +33,8 @@ interface DetailParams {
 }
 
 const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
-  const activityStore = useContext(ActivityStore);
-  const { createActivity, editActivity, submitting, loadActivity } = activityStore;
+  const rootStore = useContext(RootStoreContext);
+  const { createActivity, editActivity, submitting, loadActivity } = rootStore.activityStore;
 
   const [activity, setActivity] = useState(new ActivityFormValues());
   const [loading, setLoading] = useState(false);
