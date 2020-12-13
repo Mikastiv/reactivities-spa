@@ -9,6 +9,8 @@ interface IProps {
 }
 
 const ErrorMessage: React.FC<IProps> = ({ error, text }) => {
+  if (!error.status) return <div></div>;
+
   return (
     <Message error>
       <Message.Header>{getReasonPhrase(error.status)}</Message.Header>
