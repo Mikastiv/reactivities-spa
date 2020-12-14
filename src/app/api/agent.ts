@@ -86,6 +86,7 @@ const Profiles = {
   uploadPhoto: (photo: Blob): Promise<IPhoto> => requests.postForm('/photos', photo),
   setMainPhoto: (id: string): Promise<void> => requests.post(`/photos/${id}/setMain`, {}),
   deletePhoto: (id: string): Promise<void> => requests.delete(`/photos/${id}`),
+  update: (profile: Partial<IProfile>): Promise<void> => requests.put('/profiles', profile),
 };
 
 export const agent = {
