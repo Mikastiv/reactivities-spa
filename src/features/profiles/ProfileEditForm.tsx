@@ -56,7 +56,7 @@ const ProfileEditForm: React.FC<IProps> = ({ setEditMode, profile }) => {
           />
         </Form>
       )}
-    ></FinalForm>
+    />
   );
 };
 
