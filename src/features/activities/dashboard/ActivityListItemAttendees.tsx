@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Image, List, Popup } from 'semantic-ui-react';
 
 import { IAttendee } from '../../../app/models/activity';
@@ -7,6 +8,11 @@ interface IProps {
   attendees: IAttendee[];
 }
 
+const styles = {
+  borderColor: 'orange',
+  borderWidth: 3,
+};
+
 const ActivityListItemAttendees: React.FC<IProps> = ({ attendees }) => {
   return (
     <List horizontal>
@@ -14,7 +20,17 @@ const ActivityListItemAttendees: React.FC<IProps> = ({ attendees }) => {
         <List.Item key={attendee.username}>
           <Popup
             header={attendee.displayName}
-            trigger={<Image size="mini" circular src={attendee.image || '/assets/user.png'} />}
+            trigger={
+              <Link to={`/profile/${attendee.username}`}>
+                <Image
+                  size="mini"
+                  circular
+                  src={attendee.image || '/assets/user.png'}
+                  bordered
+                  style={attendee.following ? styles : null}
+                />
+              </Link>
+            }
           />
         </List.Item>
       ))}
