@@ -4,9 +4,10 @@ import { Grid, Loader } from 'semantic-ui-react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { RootStoreContext } from '../../../app/stores/rootStore';
+import { LIMIT } from '../../../app/stores/activityStore';
 import ActivityList from './ActivityList';
-import Loading from '../../../app/layout/Loading';
 import ActivityFilters from './ActivityFilters';
+import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
 
 interface IProps {}
 
@@ -25,19 +26,23 @@ const ActivityDashboard: React.FC<IProps> = () => {
     loadActivities();
   }, [loadActivities]);
 
-  if (loadingInitial && page === 0) return <Loading content="Loading activities..." />;
-
   return (
     <Grid>
       <Grid.Column width={10}>
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={handleGetNext}
-          hasMore={!loadingNext && page + 1 < totalPages}
-          initialLoad={false}
-        >
-          <ActivityList />
-        </InfiniteScroll>
+        {loadingInitial && page === 0 ? (
+          Array.from({ length: LIMIT }, (v, i) => i).map((i) => (
+            <ActivityListItemPlaceholder key={i} />
+          ))
+        ) : (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={handleGetNext}
+            hasMore={!loadingNext && page + 1 < totalPages}
+            initialLoad={false}
+          >
+            <ActivityList />
+          </InfiniteScroll>
+        )}
       </Grid.Column>
       <Grid.Column width={6}>
         <ActivityFilters />

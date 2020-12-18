@@ -1,5 +1,5 @@
 import { SyntheticEvent } from 'react';
-import { makeAutoObservable, observable, reaction, runInAction } from 'mobx';
+import { makeAutoObservable, observable, reaction, runInAction, toJS } from 'mobx';
 import { toast } from 'react-toastify';
 
 import { agent } from '../api/agent';
@@ -9,7 +9,7 @@ import { RootStore } from './rootStore';
 import { createAttendee, setActivityProps } from '../common/utils/utils';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
-const LIMIT = 3;
+export const LIMIT = 5;
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -85,7 +85,7 @@ export default class ActivityStore {
   // actions
   createHubConnection = (activityId: string) => {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:5001/chat', {
+      .withUrl(process.env.REACT_APP_CHAT_URL!, {
         accessTokenFactory: () => this.rootStore.commonStore.token!,
       })
       .configureLogging(LogLevel.Information)
@@ -108,9 +108,7 @@ export default class ActivityStore {
       });
     });
 
-    this.hubConnection.on('Send', (message) => {
-      toast.info(message);
-    });
+    this.hubConnection.on('Send', (message) => console.log(message));
   };
 
   stopHubConnection = () => {
@@ -160,7 +158,7 @@ export default class ActivityStore {
     let activity = this.getActivity(id);
     if (activity) {
       this.activity = activity;
-      return activity;
+      return toJS(activity);
     } else {
       this.loadingInitial = true;
       try {

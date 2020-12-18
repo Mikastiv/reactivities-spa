@@ -5,7 +5,7 @@ import { IActivitiesEnvelope, IActivity } from '../models/activity';
 import { IPhoto, IProfile, IUserActivity } from '../models/profile';
 import { IUser, IUserFormValues } from '../models/user';
 
-axios.defaults.baseURL = 'https://localhost:5001/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use(
   (config) => {
@@ -29,9 +29,14 @@ axios.interceptors.response.use(undefined, (error) => {
     toast.error('Network Error');
   }
 
-  const { status, data, config } = error.response;
+  const { status, data, config, headers } = error.response;
   if (status === 404) {
     history.push('/notfound');
+  }
+  if (status === 401 && headers['www-authenticate'].includes('The token expired at')) {
+    window.sessionStorage.removeItem('jwt');
+    history.push('/');
+    toast.info('Session has expired');
   }
   if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
     history.push('/notfound');
@@ -45,17 +50,11 @@ axios.interceptors.response.use(undefined, (error) => {
 
 const responseBody = (response: AxiosResponse) => response?.data;
 
-const sleep = (ms: number) => (response: AxiosResponse) =>
-  new Promise<AxiosResponse>((resolve) => setTimeout(() => resolve(response), ms));
-
-const delay = 1000;
-
 const requests = {
-  get: (url: string, params?: URLSearchParams) =>
-    axios.get(url, { params }).then(sleep(delay)).then(responseBody),
-  post: (url: string, body: {}) => axios.post(url, body).then(sleep(delay)).then(responseBody),
-  put: (url: string, body: {}) => axios.put(url, body).then(sleep(delay)).then(responseBody),
-  delete: (url: string) => axios.delete(url).then(sleep(delay)).then(responseBody),
+  get: (url: string, params?: URLSearchParams) => axios.get(url, { params }).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(responseBody),
   postForm: (url: string, file: Blob) => {
     let formData = new FormData();
     formData.append('File', file);
